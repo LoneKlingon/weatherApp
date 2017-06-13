@@ -1,0 +1,45 @@
+//
+//  apiData.swift
+//  weatherapp
+//
+//  Created by Anthony Youbi Sobodker on 2017-06-09.
+//  Copyright © 2017 SBS. All rights reserved.
+//
+
+import Foundation
+
+//this is like a constant can go anywhere
+typealias downloadCompleted = () -> ()
+
+class apiData
+{
+    
+    struct urlData
+    {
+        let BASE_URL = "http://api.openweathermap.org/data/2.5/weather?"
+        
+        let BASE_LAT = "lat="
+        
+        let BASE_LON = "&lon="
+        
+        let APP_ID = "&appid="
+        
+        let API_KEY = "b8da14fa6519bc0e735d2d0a9df97b26"
+        
+        var lon = "-79.42"
+        
+        var lat = "43.7"
+        
+    }
+    
+    
+//use this to create a function to call the urlData struct in other files 
+    var weatherStruct = urlData()
+    
+
+    
+    
+}
+    
+    
+    
