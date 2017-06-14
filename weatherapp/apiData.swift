@@ -26,11 +26,24 @@ class apiData
         
         let API_KEY = "b8da14fa6519bc0e735d2d0a9df97b26"
         
-        var lon = "-79.42"
+        var lon = "55.48"
         
-        var lat = "43.7"
+        var lat = "-20.89"
+        
+        
+        //used for multi day forecast
+        let BASE_URL2 = "http://api.openweathermap.org/data/2.5/forecast/daily?"
+        
+        //weather forecast day count
+        let CNT = "&cnt="
+        
+        //amount of days to have forecast api max is 16
+        var days = "7"
+        
         
     }
+    
+
     
     
 //use this to create a function to call the urlData struct in other files 

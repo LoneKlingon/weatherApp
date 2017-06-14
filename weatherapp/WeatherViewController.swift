@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Alamofire
 
 class WeatherViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
@@ -39,6 +40,8 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
     var lowTemp: Double?
     var highTemp: Double?
     
+    //array of futureweather class objects
+    var forecasts = [futureWeather]()
     
     
     var currentWeatherData:currentWeather!
@@ -61,12 +64,23 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 7
+        return forecasts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "weatherViewCell", for: indexPath)
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "weatherViewCell", for: indexPath) as? weatherCell
+        {
+            cell.updateWeatherCell(day: forecasts[indexPath.row])
+            
+           return cell
+        }
+        
+        else
+        {
+            return weatherCell()
+        }
+        
+        
     }
      //magically updates with the right values later on refer to updateUi for the detailed info of how this all works
     func kelvinToCelsius()
@@ -164,6 +178,61 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
         
     }
     
+    func downloadWeatherDataForWeatherCell(completed: @escaping downloadCompleted)
+    {
+        //load link details
+        let weatherApi = apiData()
+        
+        //construct link
+        let url = weatherApi.weatherStruct.BASE_URL2 + weatherApi.weatherStruct.BASE_LAT + weatherApi.weatherStruct.lat + weatherApi.weatherStruct.BASE_LON + weatherApi.weatherStruct.lon + weatherApi.weatherStruct.CNT + weatherApi.weatherStruct.days + weatherApi.weatherStruct.APP_ID + weatherApi.weatherStruct.API_KEY
+        
+        
+        print("multi day url = " + url)
+        
+        //convert link text to url format
+        let multiDayForecast = URL(string: url)
+        
+        //request JSON FROM URL
+        Alamofire.request(multiDayForecast!).responseJSON
+        {
+            response in
+            let result = response.value
+            
+            let resultsDict = result as? Dictionary<String, AnyObject>
+            
+            for (key, value) in resultsDict!
+            {
+                if (key == "list")
+                {
+                    //store entire list of forecasts
+                    var daysForecastsList = value as? [Dictionary<String, AnyObject>]
+                    
+                    //step through the array and add it to the forecasts array of class futureWeather objs
+                    
+                    for day in daysForecastsList!
+                    {
+                        //create future weather obj
+                        var forecast = futureWeather.init(weatherDict: day)
+                        
+                        self.forecasts.append(forecast)
+                    }
+                    
+                    //reload tableview data
+                    self.tableView.reloadData()
+                    
+                    
+                }
+                
+            }
+            completed()
+        }
+
+        
+        
+
+        
+    }
+    
     
     
     override func viewDidLoad()
@@ -185,6 +254,24 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
    
         
         updateMainUI()
+        
+        downloadWeatherDataForWeatherCell {
+            //test
+            print("multi day api test " + String(describing:self.forecasts[2].currentFutureTemp))
+            
+            //test
+            print("multi day api test " + String(describing:self.forecasts[2].lowFutureTemp))
+            
+            //test
+            print("multi day api test " + String(describing:self.forecasts[2].highFutureTemp))
+            
+            //test
+            print("multi day api test " + self.forecasts[2].dateFuture)
+           
+            //test
+            print("multi day api test " + self.forecasts[2].weatherTypeFuture)
+
+        }
         
         
         

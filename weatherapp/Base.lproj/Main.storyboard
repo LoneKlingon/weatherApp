@@ -131,11 +131,11 @@
                                 <rect key="frame" x="0.0" y="305" width="375" height="362"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="weatherViewCell" rowHeight="59" id="HLP-Ay-7Gd">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="weatherViewCell" rowHeight="59" id="HLP-Ay-7Gd" customClass="weatherCell" customModule="weatherapp" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="59"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="HLP-Ay-7Gd" id="tp9-tw-SPN">
-                                            <rect key="frame" x="0.0" y="0.0" width="375" height="58.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="59"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hjy-as-lKC">
@@ -191,6 +191,13 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="futureDateLabel" destination="xeW-HX-Eja" id="wK0-E8-wAI"/>
+                                            <outlet property="futureHighTempLabel" destination="HBy-pz-h8J" id="s4i-Dc-Bjj"/>
+                                            <outlet property="futureLowTempLabel" destination="pZV-ZM-Wpv" id="ejB-JH-eRr"/>
+                                            <outlet property="futureWeatherTypeImage" destination="hjy-as-lKC" id="86S-UR-8uR"/>
+                                            <outlet property="futureWeatherTypeLabel" destination="n8P-TG-ffT" id="dXX-wr-vSr"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
