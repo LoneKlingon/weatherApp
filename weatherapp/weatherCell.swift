@@ -28,12 +28,52 @@ class weatherCell: UITableViewCell {
         
     }
     
-    func updateWeatherCell(day: futureWeather)
+    func updateWeatherCell(day: futureWeather, scaleFlag: Bool)
     {
-        futureHighTempLabel.text = String (describing: day.currentFutureTemp)
-        futureLowTempLabel.text = String (describing: day.lowFutureTemp)
+        var high, low: Double?
+        
+        var miniWeatherType: String?
+        
+        high = day.highFutureTemp
+        low = day.lowFutureTemp
+        
+        miniWeatherType = day.weatherTypeFuture + " Mini"
+        
+        if (scaleFlag != true)
+        {
+            
+            high = round((high! - 273.15))
+            low = round((low! - 273.15))
+            
+        }
+        
+        else
+        {
+            low = round(((9 / 5) * low!) - 459.67)
+            high = round(((9 / 5 ) * high! - 459.67))
+        }
+        
+      
+       
+        
+        futureHighTempLabel.text = String (describing: high! ) + "°"
+        futureLowTempLabel.text = String (describing: low!) + "°"
         futureWeatherTypeLabel.text = day.weatherTypeFuture
-        futureWeatherTypeImage.image = UIImage(named: day.weatherTypeFuture)
+        futureDateLabel.text = day.dateFuture
+        
+        //use mini images for rain or clouds they look better 
+        if (day.weatherTypeFuture == "Rain" || day.weatherTypeFuture == "Clouds")
+        {
+            futureWeatherTypeImage.image = UIImage(named: miniWeatherType!)
+        }
+        
+        else
+        {
+            futureWeatherTypeImage.image = UIImage(named: day.weatherTypeFuture)
+        }
+        
+        
+        
         
     }
     

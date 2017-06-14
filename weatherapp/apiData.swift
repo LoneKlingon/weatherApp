@@ -26,9 +26,9 @@ class apiData
         
         let API_KEY = "b8da14fa6519bc0e735d2d0a9df97b26"
         
-        var lon = "55.48"
+        var lon = "-79.42"
         
-        var lat = "-20.89"
+        var lat = "43.7"
         
         
         //used for multi day forecast
@@ -38,7 +38,7 @@ class apiData
         let CNT = "&cnt="
         
         //amount of days to have forecast api max is 16
-        var days = "7"
+        var days = "8"
         
         
     }

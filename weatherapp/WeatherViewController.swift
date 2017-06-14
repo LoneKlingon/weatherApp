@@ -30,6 +30,7 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var weatherTypeImage: UIImageView!
     
     
+    
     var temp: Int!
     
     var cityName: String?
@@ -43,10 +44,12 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
     //array of futureweather class objects
     var forecasts = [futureWeather]()
     
-    
+
     var currentWeatherData:currentWeather!
     
-    
+
+    //Flag to know which scale to use False = celsius, True = Fahrenheit
+    var weatherFlag = false
     
     @IBAction func celsiusBtnPressed(_ sender: Any)
     {
@@ -70,7 +73,7 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "weatherViewCell", for: indexPath) as? weatherCell
         {
-            cell.updateWeatherCell(day: forecasts[indexPath.row])
+            cell.updateWeatherCell(day: forecasts[indexPath.row], scaleFlag: weatherFlag)
             
            return cell
         }
@@ -102,6 +105,11 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
         currentDayLowLbl.text = String(describing: low ) + "°"
         currentDayHighLbl.text = String(describing: high) + "°"
         
+        //set weatherCell to celsius scale
+        weatherFlag = false
+        //update tableView
+        tableView.reloadData()
+        
       
     }
     
@@ -125,6 +133,12 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
         currentTemperatureLabel.text = String(describing: current) + "°"
         currentDayLowLbl.text = String(describing: low ) + "°"
         currentDayHighLbl.text = String(describing: high) + "°"
+        
+        //set weatherCell to fahrenheit scale
+        weatherFlag = true
+        //update tableView
+        tableView.reloadData()
+        
     }
     
     func updateMainUI()
@@ -216,6 +230,8 @@ class WeatherViewController: UIViewController, UITableViewDataSource, UITableVie
                         
                         self.forecasts.append(forecast)
                     }
+                    //remove duplicate entry at 0th day (today)
+                    self.forecasts.remove(at: 0)
                     
                     //reload tableview data
                     self.tableView.reloadData()
